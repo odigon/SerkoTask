@@ -24,9 +24,10 @@ namespace SerkoService.Controllers
                 var response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new StringContent(ex.Message),
-                    ReasonPhrase = "Error"
+                    ReasonPhrase = "Error:" + ex.Message
                 };
-                throw new HttpResponseException(response);
+                var hre = new HttpResponseException(response);
+                throw hre;
             }
 
         }

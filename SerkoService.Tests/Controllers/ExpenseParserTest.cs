@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace SerkoService.Controllers.Tests
 {
@@ -12,8 +13,9 @@ namespace SerkoService.Controllers.Tests
     public class ExpenseParserTest
     {
 
+        //ensure that we are working correctly though the controller 
         [TestMethod]
-        public void Get()
+        public void CallController()
         {
             // Arrange
             ExpenseController controller = new ExpenseController();
@@ -47,6 +49,26 @@ Ivan";
             Assert.AreEqual(" development team’s project end celebration dinner", expense.description);
             Assert.AreEqual(new DateTime(2017, 4, 27), expense.date.Date);
 
+        }
+
+        [TestMethod]
+        public void BlankData()
+        {
+            // Arrange
+            ExpenseController controller = new ExpenseController();
+            string sampleText = "";
+
+            try
+            {
+                // Act
+                var expense = controller.ReadText(sampleText);
+            }
+            catch (HttpResponseException ex)
+            {
+                //Assert
+                Assert.AreEqual("Error:No Opening Tag for: total",ex.Response.ReasonPhrase );
+
+            }
         }
     }
 }

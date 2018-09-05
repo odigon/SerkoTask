@@ -14,6 +14,7 @@ namespace SerkoService.Models.Exceptions
         }
     }
 
+    //this is for when the tag cant be found at all
     public class NoOpeningTagException : Exception
     {
         public NoOpeningTagException(string tag) : base($"No Opening Tag for: {tag}")
