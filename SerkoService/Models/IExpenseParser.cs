@@ -10,8 +10,6 @@ namespace SerkoService.Models
     public interface IExpenseParser
     {
         Expense ExtractExpenseData(string rawExpenseText);
-
-        
     }
 }
 

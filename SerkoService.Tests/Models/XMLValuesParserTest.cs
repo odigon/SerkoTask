@@ -12,7 +12,6 @@ namespace SerkoService.Tests.Models
         public void GoodData()
         {
             var XMLValueParser = new XMLValueParser();
-
             var value = XMLValueParser.ValueFinder("data", true, "xxxxxxxxx<data>abc</data>xxxxxxxx");
 
             Assert.AreEqual("abc", value);
@@ -41,7 +40,6 @@ namespace SerkoService.Tests.Models
             try
             {
                 var value = XMLValueParser.ValueFinder("data", false, "xxxxxxxxx<data>abc</dat>xxxxxxxx");
-
             }
             catch (Exception ex)
             {
@@ -60,7 +58,6 @@ namespace SerkoService.Tests.Models
         public void LeftEdgeValid()
         {
             var XMLValueParser = new XMLValueParser();
-
             var value = XMLValueParser.ValueFinder("data",true, "<data>abc</data>xxxxxxxx");
 
             Assert.AreEqual("abc",value);
@@ -70,7 +67,6 @@ namespace SerkoService.Tests.Models
         public void RightEdgeValid()
         {
             var XMLValueParser = new XMLValueParser();
-
             var value = XMLValueParser.ValueFinder("data", true, "xxxxxxxx<data>abc</data>");
 
             Assert.AreEqual("abc",value);
@@ -85,7 +81,6 @@ namespace SerkoService.Tests.Models
             try
             {
                 var value = XMLValueParser.ValueFinder("data",true, "xxxxxxxxx<data>");
-
             }
             catch (Exception ex)
             {
@@ -101,7 +96,6 @@ namespace SerkoService.Tests.Models
             try
             {
                 var value = XMLValueParser.ValueFinder("data", true, "xxxxxxxxxXX");
-
             }
             catch (Exception ex)
             {
@@ -113,7 +107,6 @@ namespace SerkoService.Tests.Models
         public void NonMandatoryField()
         {
             var XMLValueParser = new XMLValueParser();
-
             var value = XMLValueParser.ValueFinder("data", false, "xxxxxxxx");
 
             Assert.AreEqual(String.Empty, value);

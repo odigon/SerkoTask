@@ -19,7 +19,7 @@ namespace SerkoService.Models
 
         public Expense ExtractExpenseData(string RawExpenseText)
         {
-            var Expense = new Expense();
+            var expense = new Expense();
 
             try
             {
@@ -27,22 +27,23 @@ namespace SerkoService.Models
                 //does not seem to be needed so its ignored
 
                 //field names are literals, could use reflection to get class field names and types
+                //or could be constants in the Expense class.   leave as literals for now, may require refactoring later
 
-                valueParser.rawText = RawExpenseText;
-                Expense.cost_centre = valueParser.ValueFinder("cost_centre", false);
-                Expense.payment_method = valueParser.ValueFinder("payment_method", false);
-                Expense.vendor = valueParser.ValueFinder("vendor", false);
-                Expense.description = valueParser.ValueFinder("description", false);
+                valueParser.RawText = RawExpenseText;
+                expense.cost_centre = valueParser.ValueFinder("cost_centre", false);
+                expense.payment_method = valueParser.ValueFinder("payment_method", false);
+                expense.vendor = valueParser.ValueFinder("vendor", false);
+                expense.description = valueParser.ValueFinder("description", false);
 
                 // in the real world we might have to just use string for this field if the format isnt reliable 
                 DateTime Date;
                 if (DateTime.TryParseExact(valueParser.ValueFinder("date", false),
                                             "dddd dd MMMM yyyy", null, DateTimeStyles.None, out Date))
-                    Expense.date = Date;
+                    expense.date = Date;
                 else
-                    Expense.date = DateTime.MinValue;
+                    expense.date = DateTime.MinValue;
                 
-                Expense.total = Decimal.Parse(valueParser.ValueFinder("total", true));
+                expense.total = Decimal.Parse(valueParser.ValueFinder("total", true));
             }
             // any unclosed tag is a fatal error
             catch (NoClosingTagException)
@@ -50,13 +51,13 @@ namespace SerkoService.Models
                 throw;
             }
 
-            //all fields are optional except for total, which is the only one to raise this exception
+            //only gets thrown if the field is mandatory
             catch (NoOpeningTagException)
             {
                 throw;
             }
 
-            return Expense;
+            return expense;
         }
     }
 }
